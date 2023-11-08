@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.blogserver.mapper.PermMapper">
+
+    <resultMap id="baseResultMap" type="com.hp.blogserver.entity.Permission">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="deleteStatus" jdbcType="INTEGER" property="deleteStatus"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="menu_id" jdbcType="BIGINT" property="menuId"/>
+
+        <association property="menu" javaType="com.hp.blogserver.entity.Menu">
+            <result column="mname" jdbcType="VARCHAR" property="name"/>
+            <result column="ntitle" jdbcType="VARCHAR" property="title"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,deleteStatus,createTime,updateTime,`name`,tag,create_by,update_by,remark,menu_id
+    </sql>
+
+
+    <select id="getSelectedPermsByMenuId" parameterType="java.lang.Long" resultMap="baseResultMap">
+        select p.*
+        from sys_permission p
+                 left join sys_menu_perm mp on mp.perm_id = p.id
+        where mp.menu_id = #{menuId,jdbcType=BIGINT}
+    </select>
+</mapper>

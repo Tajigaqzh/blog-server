@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev,doc
+  jackson:
+    default-property-inclusion: non_null
+
+
+jwt:
+  secret: ah9823hrwbe1ytehwbfidsbr34hrj3
+  expires: 86400000
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleteStatus
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
