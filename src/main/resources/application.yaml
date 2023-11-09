@@ -7,7 +7,7 @@ spring:
 
 jwt:
   secret: ah9823hrwbe1ytehwbfidsbr34hrj3
-  expires: 86400000
+  expires: 172800000
 
 
 knife4j:

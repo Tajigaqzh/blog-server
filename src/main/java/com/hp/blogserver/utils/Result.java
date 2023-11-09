@@ -27,6 +27,7 @@ public class Result {
     public static Result success(Object data) {
         Result result = new Result();
         ResultCode resultCode = ResultCode.SUCCESS;
+        result.message = resultCode.getMsg();
         result.code = resultCode.getCode();
         result.data = data;
         return result;

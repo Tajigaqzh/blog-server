@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hp.blogserver.validate.anno.EnumValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -14,6 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @Version 1.0
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName(value = "sys_dept")
 @Schema(description = "部门")
 public class Dept {

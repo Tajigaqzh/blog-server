@@ -8,13 +8,14 @@ package com.hp.blogserver.utils;
  */
 public enum ResultCode {
     SUCCESS(200, "成功"),
-    ERROR(500, "失败"),
     PARAM_ERROR(400, "参数错误"),
     NAME_PASS_ERROR(402, "用户名或密码错误"),
     NONE_TOKEN(401,"未登录，获取不到token"),
     EXPIRE(403, "无权限"),
+    NOTFOUND(404,"未找到"),
+    ERROR(500, "失败");
 
-    USERNAME_NOT_FOUND(1002, "用户名未找到");
+
 
 
     private Integer code;

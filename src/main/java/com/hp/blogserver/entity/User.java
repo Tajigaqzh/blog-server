@@ -7,10 +7,7 @@ import com.hp.blogserver.validate.anno.PhoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +26,9 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "用户实体类", title = "用户实体类")
 @TableName(value = "sys_user", autoResultMap = true)
 public class User implements Serializable, UserDetails {
@@ -69,7 +69,6 @@ public class User implements Serializable, UserDetails {
      * 密码
      */
     @Schema(description = "密码", minLength = 10, maxLength = 100)
-    @Length(min = 10, max = 100)
     @TableField(value = "password")
     private String password;
 

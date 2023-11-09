@@ -1,5 +1,6 @@
 package com.hp.blogserver.service;
 
+import com.hp.blogserver.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,5 +26,11 @@ public class UserServiceTest {
         UserDetails userDetails = userService.loadUserByUsername("admin123");
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         authorities.forEach(System.out::print);
+    }
+
+    @Test
+    public void getByIdTest(){
+        User byId = userService.getById(null);
+        System.out.println(byId);
     }
 }

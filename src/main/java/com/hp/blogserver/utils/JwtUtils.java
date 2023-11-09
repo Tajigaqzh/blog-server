@@ -29,7 +29,7 @@ public class JwtUtils {
 
     private static String secretKey;
 
-    private static int expires = 1000 * 60 * 60 * 24;
+    private static int expires = 1000 * 60 * 60 * 24 * 5;
 
     @PostConstruct
     public void initValue() {
