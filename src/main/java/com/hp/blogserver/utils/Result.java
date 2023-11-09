@@ -68,11 +68,20 @@ public class Result {
         return result;
     }
 
-    public static String errorJSON(Object result) {
-        return JSONUtil.toJsonStr(error(result));
+    public static Result error(Object data, ResultCode resultCode, String errorMessage) {
+        Result result = new Result();
+        result.code = resultCode.getCode();
+        result.data = data;
+        result.message = errorMessage;
+        return result;
     }
+
 
     public static String errorJSON(Object data, ResultCode resultCode) {
         return JSONUtil.toJsonStr(error(data, resultCode));
+    }
+
+    public static String errorJSON(Object data, ResultCode resultCode, String message) {
+        return JSONUtil.toJsonStr(error(data, resultCode, message));
     }
 }

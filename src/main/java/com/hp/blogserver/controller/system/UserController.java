@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.Result;
+import com.hp.blogserver.validate.anno.PhoneNumber;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -52,24 +54,23 @@ public class UserController {
         return Result.success();
     }
 
+    //MissingServletRequestParameterException
+    //jakarta.validation.ConstraintViolationException: page.pageSize: 最大不能超过20
     @Parameters({
             @Parameter(name = "currentPage", description = "页码", required = true, in = ParameterIn.QUERY, example = "1"),
             @Parameter(name = "pageSize", description = "每页条数", required = true, in = ParameterIn.QUERY, example = "10"),
-            @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY, example = "2012-10-12"),
-            @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY, example = "2012-12-22"),
-            @Parameter(name = "username", description = "用户名", required = false, in = ParameterIn.QUERY, example = "张三"),
-            @Parameter(name = "mobile", description = "手机号", required = false, in = ParameterIn.QUERY, example = "12345678901"),
-            @Parameter(name = "enabled", description = "状态", required = false, in = ParameterIn.QUERY, example = "true"),
-            @Parameter(name = "deptId", description = "部门id", required = false, in = ParameterIn.QUERY, example = "1")
+            @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", in = ParameterIn.QUERY, example = "2021-10-12"),
+            @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd",  in = ParameterIn.QUERY, example = "2021-12-22"),
+            @Parameter(name = "username", description = "用户名", in = ParameterIn.QUERY, example = "张三"),
+            @Parameter(name = "mobile", description = "手机号", in = ParameterIn.QUERY, example = "12345678901"),
+            @Parameter(name = "enabled", description = "状态", in = ParameterIn.QUERY, example = "true"),
+            @Parameter(name = "deptId", description = "部门id", in = ParameterIn.QUERY, example = "1")
     })
-
-
-//    MissingServletRequestParameterException
-//    jakarta.validation.ConstraintViolationException: page.pageSize: 最大不能超过20
+    @Operation(summary = "用户分页查询")
     @GetMapping("/page")
     public Result page(
-            @RequestParam(name = "currentPage", defaultValue = "1") Integer currentPage,
-            @RequestParam(name = "pageSize", defaultValue = "10") @Max(value = 50, message = "pageSize最大不超过50") Integer pageSize,
+            @RequestParam(name = "currentPage", defaultValue = "1") @NotNull Integer currentPage,
+            @RequestParam(name = "pageSize", defaultValue = "10") @NotNull @Max(value = 50, message = "pageSize最大不超过50") Integer pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime,
             String username,
@@ -88,7 +89,7 @@ public class UserController {
             queryWrapper.like("u.username", username.trim());
         }
         if (StrUtil.isNotBlank(mobile)) {
-            queryWrapper.like("u.mobile", mobile);
+            queryWrapper.eq("u.mobile", mobile);
         }
 
         if (ObjUtil.isNotNull(enabled)) {
@@ -101,12 +102,15 @@ public class UserController {
 
         queryWrapper.eq("u.deleteStatus", 1);
 
-        IPage<User> userIPage = userService.listPage(new Page<User>(currentPage, pageSize), queryWrapper);
+        IPage<User> userIPage = userService.listPage(new Page<>(currentPage, pageSize), queryWrapper);
 
-        System.out.println(userIPage);
-
-        System.out.println(currentPage);
-        System.out.println(pageSize);
-        return Result.success(userIPage);
+        return Result.success(userIPage.getRecords());
     }
+
+
+//    @DeleteMapping("/delById")
+//    public Result delete(@RequestBody User user){
+//        userService.removeById(user.getId());
+//        return Result.ok();
+//    }
 }

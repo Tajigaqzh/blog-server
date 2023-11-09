@@ -5,6 +5,7 @@ import com.hp.blogserver.common.HpConstant;
 import com.hp.blogserver.utils.HpTools;
 import com.hp.blogserver.utils.JwtUtils;
 import com.hp.blogserver.utils.Result;
+import com.hp.blogserver.utils.ResultCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +46,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }catch (Exception e){
                 response.setStatus(401);
                 response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(JSONUtil.toJsonStr(Result.error("非法token")));
+                response.getWriter().write(JSONUtil.toJsonStr(Result.error(null, ResultCode.NONE_TOKEN)));
                 return;
             }
         }

@@ -31,7 +31,6 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             try (InputStream is = request.getInputStream()) {
                 Map<String, String> authenticationBean = mapper.readValue(is, Map.class);
                 authRequest = new UsernamePasswordAuthenticationToken(authenticationBean.get("username"), authenticationBean.get("password"));
-
             } catch (IOException e) {
                 e.printStackTrace();
                 authRequest = new UsernamePasswordAuthenticationToken("", "");

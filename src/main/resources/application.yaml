@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev,doc
+    active: dev
   jackson:
     default-property-inclusion: non_null
 
@@ -8,6 +8,18 @@ spring:
 jwt:
   secret: ah9823hrwbe1ytehwbfidsbr34hrj3
   expires: 86400000
+
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    # 配置账号密码访问文档
+  basic:
+    enable: true
+    username: admin
+    password: 123456
+
 
 mybatis-plus:
   global-config:

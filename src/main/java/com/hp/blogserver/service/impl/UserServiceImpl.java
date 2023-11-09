@@ -36,7 +36,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.getByUsername(username);
-        System.out.println(user.getUsername());
         Asserts.isNull(user,"用户名未找到!");
 
         //将数据库中的角色拆分成SpringSecurity结构

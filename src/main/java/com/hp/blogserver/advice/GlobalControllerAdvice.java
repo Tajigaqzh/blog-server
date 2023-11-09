@@ -26,6 +26,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler({ConstraintViolationException.class})
     public String handleConstraintViolationException(ConstraintViolationException ex) {
 //        Arrays.stream(ex.getMessage().split(":")).toList().get(1).trim()
-        return Result.errorJSON(null, ResultCode.PARAM_ERROR);
+        return Result.errorJSON(null, ResultCode.PARAM_ERROR,Arrays.stream(ex.getMessage().split(":")).toList().get(1).trim());
     }
 }

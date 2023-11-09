@@ -52,7 +52,7 @@ public class User implements Serializable, UserDetails {
      */
     @Schema(description = "用户名", maxLength = 20, minLength = 3)
     @Length(min = 3, max = 20)
-    @NotBlank(message = "用户名不能为空")
+//    @NotBlank(message = "用户名不能为空")
     @TableField(value = "username")
     private String username;
 
@@ -61,7 +61,7 @@ public class User implements Serializable, UserDetails {
      */
     @Schema(description = "用户昵称", maxLength = 20, minLength = 3)
     @Length(min = 3, max = 20)
-    @NotBlank(message = "昵称不能为空")
+//    @NotBlank(message = "昵称不能为空")
     @TableField(value = "nickname")
     private String nickname;
 
