@@ -7,12 +7,12 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hp.blogserver.common.PageResult;
 import com.hp.blogserver.common.vo.UserVo;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.JwtUtils;
 import com.hp.blogserver.utils.Result;
-import com.hp.blogserver.common.result.HpResult;
 import com.hp.blogserver.utils.ResultCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,7 +69,7 @@ public class UserController {
     })
     @Operation(summary = "用户分页查询", description = "分页查询", method = "get")
     @GetMapping("/page")
-    public HpResult<IPage<User>> page(
+    public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") @NotNull Integer currentPage,
             @RequestParam(name = "pageSize", defaultValue = "10") @NotNull @Max(value = 50, message = "pageSize最大不超过50") Integer pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
@@ -104,8 +104,8 @@ public class UserController {
 
 
         IPage<User> userIPage = userService.listPage(new Page<>(currentPage, pageSize), queryWrapper);
-        return HpResult.ok(userIPage);
-//        return Result.success(PageResult.getInstance(userIPage));
+
+        return Result.success(PageResult.getInstance(userIPage));
     }
 
     @Parameters({@Parameter(name = "id", required = true, example = "1", description = "userId")})
