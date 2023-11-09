@@ -6,21 +6,18 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hp.blogserver.common.PageResult;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.Result;
-import com.hp.blogserver.validate.anno.PhoneNumber;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -99,12 +96,10 @@ public class UserController {
         if (ObjUtil.isNotNull(deptId)) {
             queryWrapper.eq("u.dept_id", deptId);
         }
-
         queryWrapper.eq("u.deleteStatus", 1);
 
         IPage<User> userIPage = userService.listPage(new Page<>(currentPage, pageSize), queryWrapper);
-
-        return Result.success(userIPage.getRecords());
+        return Result.success(PageResult.getInstance(userIPage));
     }
 
 
