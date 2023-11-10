@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hp.blogserver.common.PageResult;
-import com.hp.blogserver.common.vo.UserVo;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.JwtUtils;
@@ -54,9 +53,6 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-    //MissingServletRequestParameterException
-    //jakarta.validation.ConstraintViolationException: page.pageSize: 最大不能超过20
     @Parameters({
             @Parameter(name = "currentPage", description = "页码", required = true, in = ParameterIn.QUERY, example = "1"),
             @Parameter(name = "pageSize", description = "每页条数", required = true, in = ParameterIn.QUERY, example = "10"),
@@ -101,8 +97,6 @@ public class UserController {
             queryWrapper.eq("u.dept_id", deptId);
         }
         queryWrapper.eq("u.deleteStatus", 1);
-
-
         IPage<User> userIPage = userService.listPage(new Page<>(currentPage, pageSize), queryWrapper);
 
         return Result.success(PageResult.getInstance(userIPage));
@@ -141,16 +135,23 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/delete")
-    public Result remove(@NotNull(message = "id不能为空") @RequestBody UserVo userVo) {
-        System.out.println("id" + userVo.getId());
-        return Result.ok();
+    @Operation(summary = "删除用户", description = "根据iD删除永华")
+    @PostMapping("/delById")
+    public Result remove(@RequestBody User user) {
+        return Result.success(userService.removeById(user.getId()));
     }
 
     //TODO 修改密码，批量删除，更新，新增用户，
-    @PostMapping("/add")
-    public Result addUser() {
 
+    public Result saveOrUpdate(@RequestBody User user) {
         return Result.success();
     }
+
+    @Operation(summary = "批量删除",description = "根据id批量删除")
+    @PostMapping("/removeBatchByIds")
+    public Result removeBatchByIds(@RequestBody List<Long> ids) {
+        return Result.success(userService.removeBatchByIds(ids));
+    }
+
+
 }
