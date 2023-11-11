@@ -12,9 +12,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 /**
  * @Author 20126
- * @Description
+ * @Description 记录错误日志
  * @Date 2023/11/5 15:36
  * @Version 1.0
+ * @see com.hp.blogserver.controller.system.UserController example
  */
 @Slf4j
 @Aspect

@@ -1,4 +1,4 @@
-package com.hp.blogserver.validate.anno;
+package com.hp.blogserver.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -32,6 +32,7 @@ public @interface PhoneNumber {
      * @return boolean
      */
     boolean restrict() default true;
+
 
 
 

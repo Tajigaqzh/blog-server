@@ -3,7 +3,10 @@ package com.hp.blogserver.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -13,6 +16,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @Version 1.0
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName(value = "sys_role",autoResultMap = true)
 @Schema(description = "用户角色")
 public class Role{

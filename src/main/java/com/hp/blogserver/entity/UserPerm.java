@@ -3,7 +3,10 @@ package com.hp.blogserver.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author 20126
@@ -13,6 +16,9 @@ import lombok.Data;
  */
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "用户权限")
 @TableName(value = "sys_user_permission")
 public class UserPerm {
@@ -22,7 +28,6 @@ public class UserPerm {
     @Schema(description = "用户主键id")
     @TableField(value = "user_id")
     private Long userId;
-
     /**
      * 权限主键id
      */

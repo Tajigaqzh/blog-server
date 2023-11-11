@@ -8,6 +8,7 @@ import com.hp.blogserver.entity.Menu;
 import com.hp.blogserver.mapper.MenuMapper;
 import com.hp.blogserver.mapper.UserMapper;
 import com.hp.blogserver.utils.HpTools;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -28,6 +29,7 @@ import java.util.stream.Stream;
  * @Date 2023/11/5 17:20
  * @Version 1.0
  */
+@Slf4j
 @Component
 public class MyAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
 
@@ -56,11 +58,12 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
         //访问的接口地址
         String requestURI = requestAuthorizationContext.getRequest().getRequestURI();
 
+        log.debug(user.toString());
+        log.info(requestURI);
         //匿名地址直接访问
         if (HpTools.contains(requestURI, HpConstant.anonymous)) {
             return new AuthorizationDecision(true);
         }
-
         //查询当前请求的接口需要哪些权限能访问
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("m.type", 2);
@@ -73,7 +76,9 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
          * 动态验证权限
          */
         for (String auth : auths) {
+            System.out.println(auth);
             for (Menu menu : menus) {
+                System.out.println(menu);
                 List<String> collect = menu.getPerms().stream().map(Permission::getTag).toList();
                 if (collect.contains(auth)) {
                     return new AuthorizationDecision(true);

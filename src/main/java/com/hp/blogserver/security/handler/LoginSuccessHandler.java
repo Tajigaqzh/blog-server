@@ -34,7 +34,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         response.setContentType("application/json;charset=UTF-8");
         Map<String, Object> data = new HashMap<>();
-        data.put("username",user.getUsername());
+//        data.put("username",user.getUsername());
         data.put("roles",user.getRoles().stream().map(Role::getTag).collect(Collectors.toList()));
         data.put("token",token);
 //        data.put("refreshToken",token);
