@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hp.blogserver.mapper.PermMapper">
 
-    <resultMap id="baseResultMap" type="com.hp.blogserver.entity.Permission">
+    <resultMap id="BaseResultMap" type="com.hp.blogserver.entity.Permission">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="deleteStatus" jdbcType="INTEGER" property="deleteStatus"/>
         <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
@@ -16,7 +16,7 @@
 
         <association property="menu" javaType="com.hp.blogserver.entity.Menu">
             <result column="mname" jdbcType="VARCHAR" property="name"/>
-            <result column="ntitle" jdbcType="VARCHAR" property="title"/>
+            <result column="mtitle" jdbcType="VARCHAR" property="title"/>
         </association>
     </resultMap>
 
@@ -26,10 +26,17 @@
     </sql>
 
 
-    <select id="getSelectedPermsByMenuId" parameterType="java.lang.Long" resultMap="baseResultMap">
+    <select id="getSelectedPermsByMenuId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select p.*
         from sys_permission p
                  left join sys_menu_perm mp on mp.perm_id = p.id
         where mp.menu_id = #{menuId,jdbcType=BIGINT}
+    </select>
+
+    <select id="listPage" resultMap="BaseResultMap">
+        select p.*, m.name as mname, m.title as mtitle
+        from sys_permission p
+                 left join sys_menu m on p.menu_id = m.id
+            ${ew.customSqlSegment}
     </select>
 </mapper>

@@ -1,35 +1,25 @@
-package com.hp.blogserver.mapper;
+package com.hp.blogserver.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hp.blogserver.entity.Menu;
 import com.hp.blogserver.entity.Permission;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * @Author 20126
  * @Description
- * @Date 2023/11/8 21:29
- * @Version 1.0
+ * @Date 2023/11/11 16:36
+ * @Version 1.0 权限服务层
  */
-@Mapper
-public interface PermMapper extends BaseMapper<Permission> {
-    /**
-     * 根据menuId查询权限
-     *
-     * @param menuId menuId
-     * @return List<Permission>
-     */
-    List<Permission> getSelectedPermsByMenuId(@Param(value = "menuId") Long menuId);
+
+public interface IPermService extends IService<Permission> {
 
     /**
-     * 根据条件分页查询权限
-     * @param page page
+     * 根据permission查询menu
+     * @param page menu
      * @param queryWrapper 查询条件
      * @return IPage<Permission>
      */

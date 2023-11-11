@@ -28,7 +28,6 @@ public class Result {
     }
 
 
-
     public static String okJSON(Object data) {
         return JSONUtil.toJsonStr(success(data));
     }
@@ -44,7 +43,6 @@ public class Result {
     public static Result ok() {
         return success(null);
     }
-
 
 
     public static Result error(Object data, ResultCode resultCode) {
@@ -63,6 +61,10 @@ public class Result {
         return result;
     }
 
+
+    public static String errorJSON(ResultCode resultCode) {
+        return JSONUtil.toJsonStr(error(null, resultCode));
+    }
 
     public static String errorJSON(Object data, ResultCode resultCode) {
         return JSONUtil.toJsonStr(error(data, resultCode));

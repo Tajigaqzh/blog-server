@@ -15,6 +15,7 @@ public enum ResultCode {
     NOTFOUND(404,"未找到"),
     INSERT_ERROR(405,"插入失败"),
     UPDATE_ERROR(406,"更新失败"),
+    UNSUPPORT_METHOD(410,"方法不支持"),
     ERROR(500, "服务器错误");
 
 
