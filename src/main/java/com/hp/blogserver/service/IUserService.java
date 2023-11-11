@@ -8,6 +8,8 @@ import com.hp.blogserver.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 /**
  * @Author 20126
  * @Description
@@ -16,4 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface IUserService extends IService<User>, UserDetailsService {
     IPage<User> listPage(IPage<User> page, @Param(Constants.WRAPPER)Wrapper<User> userWrapper);
+    int deleteBatchByIds(List<Long> ids);
+
+    boolean saveUser(User user);
+
+    boolean updateUser(User user);
 }

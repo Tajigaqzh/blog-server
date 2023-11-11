@@ -5,14 +5,19 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hp.blogserver.common.HpConstant;
 import com.hp.blogserver.common.PageResult;
+import com.hp.blogserver.common.dto.UserDto;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.JwtUtils;
 import com.hp.blogserver.utils.Result;
 import com.hp.blogserver.utils.ResultCode;
+import com.hp.blogserver.validate.AddGroup;
+import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -20,6 +25,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +48,12 @@ import java.util.Map;
  */
 @Slf4j
 @Tag(name = "用户", description = "用户登录注册相关接口")
-@Validated
 @RequestMapping("/user")
 @RestController
 public class UserController {
+
+//    不涉及事务在controller处理，涉及的话，还是在service层处理
+    //TODO 重写一个UserDTO，对字段做出限制，授权
 
     @Autowired
     IUserService userService;
@@ -108,7 +116,7 @@ public class UserController {
     public Result getById(@NotNull(message = "id不能为空") Long id) {
         User user = userService.getById(id);
         if (ObjectUtil.isNotNull(user)) {
-            user.setPassword(null);
+            user.setPassword(HpConstant.decodePass);
             return Result.success(user);
         }
         return Result.error(null, ResultCode.NOTFOUND);
@@ -117,41 +125,76 @@ public class UserController {
     @Parameters({@Parameter(name = "token", required = true, description = "旧的token")})
     @Operation(summary = "刷新token", description = "根据旧的token生成新的token,过期时间延迟", method = "post")
     @PostMapping("/rfToken")
-    public Result refreshToken(@RequestBody String token) {
+    public Result refreshToken(@RequestBody @NotBlank String token) {
         String token1 = JwtUtils.refreshToken(JSONUtil.parse(token).getByPath("token").toString());
         Map<String, Object> data = new HashMap<>();
         data.put("token", token1);
         return Result.success(data);
     }
 
+    @Operation(summary = "查询所有用户", description = "查询所有用户")
     @GetMapping("/all")
     public Result getAllUser() {
-        List<User> collect = userService.list().stream().map(user -> {
-                    user.setPassword(null);
-                    return user;
-                }
-        ).toList();
-        return Result.result(ResultCode.SUCCESS, collect);
+        List<User> collect = userService.list()
+                .stream()
+                .peek(user -> user.setPassword(HpConstant.decodePass)).toList();
+        return Result.success(collect);
     }
 
 
     @Operation(summary = "删除用户", description = "根据iD删除永华")
     @PostMapping("/delById")
     public Result remove(@RequestBody User user) {
-        return Result.success(userService.removeById(user.getId()));
+        boolean b = userService.removeById(user.getId());
+        if (b) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.PARAM_ERROR);
     }
 
-    //TODO 修改密码，批量删除，更新，新增用户，
 
-    public Result saveOrUpdate(@RequestBody User user) {
-        return Result.success();
+    @Operation(summary = "新增用户", description = "新增用户")
+    @PostMapping("/save")
+    public Result save(@RequestBody @Validated(value = {AddGroup.class}) UserDto ua) {
+
+        boolean save = userService.saveUser(ua);
+        if (save) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.PARAM_ERROR);
     }
 
-    @Operation(summary = "批量删除",description = "根据id批量删除")
+    @Operation(summary = "更新用户", description = "更新用户")
+    @PostMapping("/update")
+    public Result update(@RequestBody @Validated(value = {UpdateGroup.class}) UserDto ua) {
+        boolean updateUser = userService.updateUser(ua);
+        if (updateUser) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.PARAM_ERROR);
+    }
+
+    @Operation(summary = "批量删除", description = "根据id批量删除")
     @PostMapping("/removeBatchByIds")
     public Result removeBatchByIds(@RequestBody List<Long> ids) {
-        return Result.success(userService.removeBatchByIds(ids));
+        int i = userService.deleteBatchByIds(ids);
+        if (i > 0) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.PARAM_ERROR);
     }
 
+    @Operation(summary = "重置初始化密码", description = "重置密码")
+    @PostMapping("/ReSetPassword")
+    public Result resetPassword(@RequestBody User user) {
+        String username = user.getUsername();
+        String substring = user.getUsername().substring(username.length() - 4, username.length());
 
+        String encode = passwordEncoder.encode(substring);
+        boolean update = userService.update(new UpdateWrapper<User>().set("password", encode).eq("id", user.getId()));
+        if (update) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.PARAM_ERROR);
+    }
 }

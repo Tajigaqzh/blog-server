@@ -2,10 +2,9 @@ package com.hp.blogserver.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hp.blogserver.validate.anno.EnumValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import com.hp.blogserver.annotation.EnumValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +39,7 @@ public class Menu {
      * 删除状态：0、已删除 1、未删除
      **/
     @Schema(description = "删除状态：0、已删除 1、未删除")
-    @EnumValue(intValues = {1, 0})
+//    @EnumValue(intValues = {1,0})
     @TableField(value = "deleteStatus")
     private int deleteStatus;
 
@@ -66,7 +65,7 @@ public class Menu {
      * 菜单名称
      **/
 
-    @NotBlank
+//    @NotBlank
     @Schema(description = "菜单名称")
     @TableField(value = "name")
     private String name;
@@ -74,7 +73,7 @@ public class Menu {
     /**
      * 菜单地址
      **/
-    @NotBlank
+//    @NotBlank
     @Schema(description = "菜单地址")
     @TableField(value = "path")
     private String path;
@@ -89,7 +88,7 @@ public class Menu {
     /**
      * 标题
      **/
-    @NotBlank
+//    @NotBlank
     @Schema(description = "标题")
     @TableField(value = "title")
     private String title;
@@ -97,7 +96,7 @@ public class Menu {
     /**
      * 类型：0、目录 1、菜单 2、接口
      **/
-    @EnumValue(intValues = {1, 0, 2})
+//    @EnumValue(intValues = {1, 0, 2})
     @Schema(description = "类型：0、目录 1、菜单 2、接口")
     @TableField(value = "type")
     private Integer type;
@@ -134,7 +133,7 @@ public class Menu {
     /**
      * 父菜单
      **/
-    @NotNull
+//    @NotNull
     @Schema(description = "父菜单")
     @TableField(value = "parent_id")
     private Long parentId;

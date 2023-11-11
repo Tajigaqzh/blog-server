@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+
 /**
  * @Author 20126
  * @Description
@@ -41,6 +43,15 @@ public class UserMapperTest {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         IPage<User> userIPage = userMapper.listUser(new Page<>(1, 10), wrapper);
         System.out.println(userIPage.getRecords());
+    }
+
+    @Test
+    public void removeBatch(){
+        ArrayList<Long> longs = new ArrayList<>();
+        longs.add(100L);
+        longs.add(263L);
+        int i = userMapper.deleteBatchIds(longs);
+        System.out.println(i);
     }
 
 

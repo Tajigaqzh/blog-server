@@ -1,4 +1,4 @@
-package com.hp.blogserver.validate.anno;
+package com.hp.blogserver.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -24,6 +24,10 @@ public @interface EnumValue {
     String[] strValues() default {};
 
     int[] intValues() default {};
+
+    boolean value() default false;
+
+
 
     // 分组
     Class<?>[] groups() default {};

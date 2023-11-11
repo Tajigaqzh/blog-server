@@ -1,4 +1,5 @@
-package com.hp.blogserver.validate.anno;
+package com.hp.blogserver.annotation;
+
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -35,6 +36,8 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, Object
                     return true;
                 }
             }
+        }else if (o instanceof Boolean) {
+            return true;
         }
         return false;
     }

@@ -52,4 +52,6 @@ public class HpConstant {
      * 放行的url集合
      */
     public static List<String> anonymousList = Arrays.asList(anonymous);
+
+    public static String decodePass = "********";
 }

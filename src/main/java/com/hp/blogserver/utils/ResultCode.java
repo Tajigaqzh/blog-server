@@ -9,13 +9,13 @@ package com.hp.blogserver.utils;
 public enum ResultCode {
     SUCCESS(200, "成功"),
     PARAM_ERROR(400, "参数错误"),
-    NAME_PASS_ERROR(402, "用户名或密码错误"),
     NONE_TOKEN(401,"未登录，获取不到token"),
+    NAME_PASS_ERROR(402, "用户名或密码错误"),
     EXPIRE(403, "无权限"),
     NOTFOUND(404,"未找到"),
-    ERROR(500, "失败");
-
-
+    INSERT_ERROR(405,"插入失败"),
+    UPDATE_ERROR(406,"更新失败"),
+    ERROR(500, "服务器错误");
 
 
     private Integer code;

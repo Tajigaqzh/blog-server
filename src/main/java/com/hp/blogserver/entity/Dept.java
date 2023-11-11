@@ -2,7 +2,7 @@ package com.hp.blogserver.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hp.blogserver.validate.anno.EnumValue;
+import com.hp.blogserver.annotation.EnumValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -95,7 +95,7 @@ public class Dept {
      * 部门的状态（0正常 1停用）
      **/
     @Schema(description = "部门状态（0正常 1停用）")
-    @EnumValue(intValues = {0, 1})
+//    @EnumValue(intValues = {0, 1})
     @TableField(value = "status")
     private Boolean status;
 

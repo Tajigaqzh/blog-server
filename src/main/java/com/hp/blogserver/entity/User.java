@@ -2,13 +2,9 @@ package com.hp.blogserver.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hp.blogserver.validate.anno.EnumValue;
-import com.hp.blogserver.validate.anno.PhoneNumber;
+import com.hp.blogserver.annotation.EnumValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,9 +36,11 @@ public class User implements Serializable, UserDetails {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /** 删除状态：0、已删除 1、未删除 **/
+    /**
+     * 删除状态：0、已删除 1、未删除
+     **/
     @Schema(description = "删除状态：0、已删除 1、未删除")
-    @EnumValue(intValues = {0, 1}, message = "状态只能是0或者1")
+//    @EnumValue(intValues = {0, 1}, message = "状态只能是0或者1")
     @TableField(value = "deleteStatus")
     private int deleteStatus;
 
@@ -51,7 +49,6 @@ public class User implements Serializable, UserDetails {
      * 用户名
      */
     @Schema(description = "用户名", maxLength = 20, minLength = 3)
-    @Length(min = 3, max = 20)
 //    @NotBlank(message = "用户名不能为空")
     @TableField(value = "username")
     private String username;
@@ -60,7 +57,6 @@ public class User implements Serializable, UserDetails {
      * 昵称
      */
     @Schema(description = "用户昵称", maxLength = 20, minLength = 3)
-    @Length(min = 3, max = 20)
 //    @NotBlank(message = "昵称不能为空")
     @TableField(value = "nickname")
     private String nickname;
@@ -85,7 +81,7 @@ public class User implements Serializable, UserDetails {
      * 性别：0、女 1、男
      **/
     @Schema(description = "性别：0、女 1、男")
-    @EnumValue(intValues = {0, 1}, message = "账户状态只能是0或者1")
+    @EnumValue(intValues = {0, 1}, message = "性别只能是0或者1")
     @TableField(value = "sex")
     private int sex;
 
@@ -93,7 +89,6 @@ public class User implements Serializable, UserDetails {
      * 手机号
      **/
 
-    @PhoneNumber(restrict = false)
     @Schema(description = "手机号", requiredMode = Schema.RequiredMode.REQUIRED)
     @TableField(value = "mobile")
     private String mobile;
@@ -102,7 +97,6 @@ public class User implements Serializable, UserDetails {
     /**
      * 邮箱
      **/
-    @Email(message = "邮箱格式不正确")
     @Schema(description = "邮箱")
     @TableField(value = "email")
     private String email;
@@ -110,7 +104,7 @@ public class User implements Serializable, UserDetails {
     /**
      * 部门ID
      **/
-    @Length(min = 1, max = 20)
+
     @Schema(description = "部门ID")
     @TableField(value = "dept_id")
     private Long deptId;
@@ -160,7 +154,7 @@ public class User implements Serializable, UserDetails {
      * 更新者
      **/
     @Schema(description = "更新者")
-    @TableField(value = "update_by", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
 
 
@@ -170,7 +164,7 @@ public class User implements Serializable, UserDetails {
     @Schema(description = "更新时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(value = "updateTime", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "updateTime", fill = FieldFill.UPDATE)
     private Date updateTime;
 
 

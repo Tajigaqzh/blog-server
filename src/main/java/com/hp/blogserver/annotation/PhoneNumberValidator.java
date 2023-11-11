@@ -1,10 +1,9 @@
-package com.hp.blogserver.validate.anno;
+package com.hp.blogserver.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.util.ObjectUtils;
 
-import java.lang.annotation.Documented;
 import java.util.regex.Pattern;
 
 /**
@@ -40,7 +39,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, Ob
             return Pattern.compile(regexPattern).matcher(value.toString()).find();
         }
         if (restrict) {
-            System.out.println(value);
             return Pattern.compile(regexStrict).matcher(value.toString()).find();
         } else {
             return Pattern.compile(regexSimple).matcher(value.toString()).find();
