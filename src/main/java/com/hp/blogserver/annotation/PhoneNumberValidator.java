@@ -2,7 +2,6 @@ package com.hp.blogserver.annotation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.util.ObjectUtils;
 
 import java.util.regex.Pattern;
 
@@ -32,9 +31,6 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, Ob
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if (ObjectUtils.isEmpty(value)){
-            return false;
-        }
         if (regexPattern != null ) {
             return Pattern.compile(regexPattern).matcher(value.toString()).find();
         }
