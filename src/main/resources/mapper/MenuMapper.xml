@@ -20,29 +20,15 @@
                      select="com.hp.blogserver.mapper.MenuMapper.selectByParentId"/>
 
         <collection property="perms" column="id" ofType="com.hp.blogserver.entity.Permission"
-                    select="com.hp.blogserver.mapper.PermMapper.getSelectedPermsByMenuId"/>
+                    select="com.hp.blogserver.mapper.PermMapper.getSelectedPermissionByMenuId"/>
 
         <collection property="roles" column="id" ofType="com.hp.blogserver.entity.Role"
                     select="com.hp.blogserver.mapper.RoleMapper.getSelectedRolesByMenuId"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        m.id,
-            m.deleteStatus,
-            m.createTime,
-            m.updateTime,
-            m.name,
-            m.path,
-            m.component,
-            m.title,
-            m.type,
-            m.icon,
-            m.showLink,
-            m.rank,
-            m.parent_id
-    </sql>
 
-    <sql id="Base_Column_List2">
+
+    <sql id="Base_Column_List">
      m.id,
             m.deleteStatus,
             m.createTime,

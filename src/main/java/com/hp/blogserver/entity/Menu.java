@@ -2,6 +2,8 @@ package com.hp.blogserver.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hp.blogserver.mapper.MenuMapper;
+import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import com.hp.blogserver.annotation.EnumValue;
@@ -31,6 +33,7 @@ public class Menu {
     /**
      * 主键ID
      **/
+    @NotNull(message = "id不为空", groups = UpdateGroup.class)
     @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -38,6 +41,7 @@ public class Menu {
     /**
      * 删除状态：0、已删除 1、未删除
      **/
+    @EnumValue(intValues = {1, 0}, message = "状态只能为0,1")
     @Schema(description = "删除状态：0、已删除 1、未删除")
 //    @EnumValue(intValues = {1,0})
     @TableField(value = "deleteStatus")
@@ -58,7 +62,7 @@ public class Menu {
     @Schema(description = "更新时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @TableField(value = "updateTime", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "updateTime", fill = FieldFill.UPDATE)
     private java.util.Date updateTime;
 
     /**
@@ -68,12 +72,13 @@ public class Menu {
 //    @NotBlank
     @Schema(description = "菜单名称")
     @TableField(value = "name")
+    @NotBlank(message = "name不能为空")
     private String name;
 
     /**
      * 菜单地址
      **/
-//    @NotBlank
+    @NotBlank(message = "path不能为空")
     @Schema(description = "菜单地址")
     @TableField(value = "path")
     private String path;
@@ -88,7 +93,7 @@ public class Menu {
     /**
      * 标题
      **/
-//    @NotBlank
+    @NotBlank(message = "title不能为空")
     @Schema(description = "标题")
     @TableField(value = "title")
     private String title;
@@ -96,7 +101,7 @@ public class Menu {
     /**
      * 类型：0、目录 1、菜单 2、接口
      **/
-//    @EnumValue(intValues = {1, 0, 2})
+    @EnumValue(intValues = {1, 0, 2})
     @Schema(description = "类型：0、目录 1、菜单 2、接口")
     @TableField(value = "type")
     private Integer type;
@@ -133,7 +138,7 @@ public class Menu {
     /**
      * 父菜单
      **/
-//    @NotNull
+    @NotNull(message = "父id不能为空")
     @Schema(description = "父菜单")
     @TableField(value = "parent_id")
     private Long parentId;
@@ -157,6 +162,6 @@ public class Menu {
      * 更新者
      **/
     @Schema(description = "更新者")
-    @TableField(value = "update_by", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
 }

@@ -47,12 +47,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.getByUsername(username);
         Asserts.isNull(user, "用户名未找到!");
-
         //将数据库中的角色拆分成SpringSecurity结构
         String roles = user.getRoles().stream().map(Role::getTag).collect(Collectors.joining(","));
-
         user.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(roles));
-
         return user;
     }
 
@@ -64,28 +61,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public int deleteBatchByIds(List<Long> ids) {
         return userMapper.deleteBatchIds(ids);
     }
-
-    public boolean saveUser(User user) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", user.getUsername());
-        User user1 = userMapper.selectOne(queryWrapper);
-        if (ObjectUtil.isNull(user1)) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            System.out.println(user);
-            int insert = userMapper.insert(user);
-            System.out.println(insert);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateUser(User user) {
-        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
-        userUpdateWrapper.eq("username", user.getUsername());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        int update = userMapper.update(user, userUpdateWrapper);
-        return update > 0;
-    }
-
 }

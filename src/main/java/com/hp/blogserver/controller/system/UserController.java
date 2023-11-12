@@ -1,5 +1,6 @@
 package com.hp.blogserver.controller.system;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -39,6 +40,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author 20126
@@ -52,9 +55,8 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-//    不涉及事务在controller处理，涉及的话，还是在service层处理
+    //    不涉及事务在controller处理，涉及的话，还是在service层处理
     //TODO 重写一个UserDTO，对字段做出限制，授权
-
     @Autowired
     IUserService userService;
 
@@ -107,7 +109,10 @@ public class UserController {
         queryWrapper.eq("u.deleteStatus", 1);
         IPage<User> userIPage = userService.listPage(new Page<>(currentPage, pageSize), queryWrapper);
 
-        return Result.success(PageResult.getInstance(userIPage));
+        if (ObjectUtil.isNotNull(userIPage)) {
+            return Result.success(PageResult.getInstance(userIPage));
+        }
+        return Result.error(null, ResultCode.QUERY_ERROR);
     }
 
     @Parameters({@Parameter(name = "id", required = true, example = "1", description = "userId")})
@@ -119,7 +124,7 @@ public class UserController {
             user.setPassword(HpConstant.decodePass);
             return Result.success(user);
         }
-        return Result.error(null, ResultCode.NOTFOUND);
+        return Result.error(null, ResultCode.QUERY_ERROR);
     }
 
     @Parameters({@Parameter(name = "token", required = true, description = "旧的token")})
@@ -135,10 +140,14 @@ public class UserController {
     @Operation(summary = "查询所有用户", description = "查询所有用户")
     @GetMapping("/all")
     public Result getAllUser() {
-        List<User> collect = userService.list()
-                .stream()
-                .peek(user -> user.setPassword(HpConstant.decodePass)).toList();
-        return Result.success(collect);
+        List<User> list = userService.list();
+        if (CollectionUtil.isNotEmpty(list)) {
+            for (User user : list) {
+                user.setPassword(HpConstant.decodePass);
+            }
+            return Result.success(list);
+        }
+        return Result.error(null, ResultCode.QUERY_ERROR);
     }
 
 
@@ -149,29 +158,30 @@ public class UserController {
         if (b) {
             return Result.ok();
         }
-        return Result.error(null, ResultCode.PARAM_ERROR);
+        return Result.error(null, ResultCode.DELETE_ERROR);
     }
 
 
     @Operation(summary = "新增用户", description = "新增用户")
     @PostMapping("/save")
     public Result save(@RequestBody @Validated(value = {AddGroup.class}) UserDto ua) {
-
-        boolean save = userService.saveUser(ua);
+        boolean save = userService.save(ua);
         if (save) {
             return Result.ok();
         }
-        return Result.error(null, ResultCode.PARAM_ERROR);
+        return Result.error(null, ResultCode.INSERT_ERROR);
     }
 
     @Operation(summary = "更新用户", description = "更新用户")
     @PostMapping("/update")
     public Result update(@RequestBody @Validated(value = {UpdateGroup.class}) UserDto ua) {
-        boolean updateUser = userService.updateUser(ua);
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", ua.getId());
+        boolean updateUser = userService.update(ua, updateWrapper);
         if (updateUser) {
             return Result.ok();
         }
-        return Result.error(null, ResultCode.PARAM_ERROR);
+        return Result.error(null, ResultCode.UPDATE_ERROR);
     }
 
     @Operation(summary = "批量删除", description = "根据id批量删除")
@@ -181,7 +191,7 @@ public class UserController {
         if (i > 0) {
             return Result.ok();
         }
-        return Result.error(null, ResultCode.PARAM_ERROR);
+        return Result.error(null, ResultCode.DELETE_ERROR);
     }
 
     @Operation(summary = "重置初始化密码", description = "重置密码")
@@ -195,6 +205,6 @@ public class UserController {
         if (update) {
             return Result.ok();
         }
-        return Result.error(null, ResultCode.PARAM_ERROR);
+        return Result.error(null, ResultCode.OTHER_ERROR);
     }
 }

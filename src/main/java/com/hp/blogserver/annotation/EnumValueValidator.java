@@ -15,7 +15,6 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, Object
     private int[] intValues;
 
 
-
     @Override
     public void initialize(EnumValue constraintAnnotation) {
         strValues = constraintAnnotation.strValues();
@@ -30,14 +29,12 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, Object
                     return true;
                 }
             }
-        }else if (o instanceof Integer) {
+        } else if (o instanceof Integer) {
             for (int s : intValues) {
                 if (s == (Integer) o) {
                     return true;
                 }
             }
-        }else if (o instanceof Boolean) {
-            return true;
         }
         return false;
     }

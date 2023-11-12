@@ -25,10 +25,6 @@ public @interface EnumValue {
 
     int[] intValues() default {};
 
-    boolean value() default false;
-
-
-
     // 分组
     Class<?>[] groups() default {};
 

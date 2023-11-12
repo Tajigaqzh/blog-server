@@ -8,6 +8,8 @@ import com.hp.blogserver.entity.Menu;
 import com.hp.blogserver.entity.Permission;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Author 20126
  * @Description
@@ -24,4 +26,11 @@ public interface IPermService extends IService<Permission> {
      * @return IPage<Permission>
      */
     IPage<Permission> listPage(IPage<Menu> page, @Param(Constants.WRAPPER) Wrapper<Permission> queryWrapper);
+
+
+
+    List<Permission> getSelectedPermissionByUserId(Long userId);
+
+    List<Permission> getSelectedPermissionByMenuId(Long menuId);
+
 }

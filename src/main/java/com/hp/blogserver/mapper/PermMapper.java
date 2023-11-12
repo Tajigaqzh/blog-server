@@ -25,13 +25,20 @@ public interface PermMapper extends BaseMapper<Permission> {
      * @param menuId menuId
      * @return List<Permission>
      */
-    List<Permission> getSelectedPermsByMenuId(@Param(value = "menuId") Long menuId);
+    List<Permission> getSelectedPermissionByMenuId(@Param(value = "menuId") Long menuId);
+
+
+    List<Permission> getPermissionByUserId(@Param(value = "userId") Long userId);
+
 
     /**
      * 根据条件分页查询权限
-     * @param page page
+     *
+     * @param page         page
      * @param queryWrapper 查询条件
      * @return IPage<Permission>
      */
     IPage<Permission> listPage(IPage<Menu> page, @Param(Constants.WRAPPER) Wrapper<Permission> queryWrapper);
+
+
 }

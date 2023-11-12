@@ -10,6 +10,8 @@ import com.hp.blogserver.service.IPermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author 20126
  * @Description
@@ -25,5 +27,16 @@ public class PermServiceImpl extends ServiceImpl<PermMapper, Permission> impleme
 
     public IPage<Permission> listPage(IPage<Menu> page, Wrapper<Permission> queryWrapper) {
         return permMapper.listPage(page, queryWrapper);
+    }
+
+
+    @Override
+    public List<Permission> getSelectedPermissionByUserId(Long userId) {
+        return permMapper.getPermissionByUserId(userId);
+    }
+
+    @Override
+    public List<Permission> getSelectedPermissionByMenuId(Long menuId) {
+        return permMapper.getSelectedPermissionByMenuId(menuId);
     }
 }
