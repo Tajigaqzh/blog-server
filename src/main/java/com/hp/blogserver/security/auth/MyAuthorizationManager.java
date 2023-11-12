@@ -58,7 +58,6 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
         //访问的接口地址
         String requestURI = requestAuthorizationContext.getRequest().getRequestURI();
 
-        log.debug(user.toString());
         log.info(requestURI);
         //匿名地址直接访问
         if (HpTools.contains(requestURI, HpConstant.anonymous)) {
@@ -76,9 +75,9 @@ public class MyAuthorizationManager implements AuthorizationManager<RequestAutho
          * 动态验证权限
          */
         for (String auth : auths) {
-            System.out.println(auth);
+//            System.out.println(auth);
             for (Menu menu : menus) {
-                System.out.println(menu);
+//                System.out.println(menu);
                 List<String> collect = menu.getPerms().stream().map(Permission::getTag).toList();
                 if (collect.contains(auth)) {
                     return new AuthorizationDecision(true);

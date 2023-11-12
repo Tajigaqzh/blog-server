@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hp.blogserver.common.PageResult;
-import com.hp.blogserver.entity.Role;
-import com.hp.blogserver.service.IRoleService;
+import com.hp.blogserver.common.dto.DeptDto;
+import com.hp.blogserver.entity.Dept;
+import com.hp.blogserver.service.IDeptService;
 import com.hp.blogserver.utils.Result;
 import com.hp.blogserver.utils.ResultCode;
 import com.hp.blogserver.validate.AddGroup;
+import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -30,17 +32,16 @@ import java.util.List;
 /**
  * @Author 20126
  * @Description
- * @Date 2023/11/10 7:06
+ * @Date 2023/11/12 18:53
  * @Version 1.0
  */
-@Tag(name = "用户角色")
+@Tag(name = "部门")
 @RestController
-@Validated
-@RequestMapping("/role")
-public class RoleController {
-    @Autowired
-    private IRoleService roleService;
+@RequestMapping("/dept")
+public class DeptController {
 
+    @Autowired
+    private IDeptService deptService;
 
     @Parameters({
             @Parameter(name = "currentPage", description = "页码", required = true, in = ParameterIn.QUERY),
@@ -48,90 +49,81 @@ public class RoleController {
             @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
             @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
     })
-    @Operation(summary = "用户角色分页查询")
+    @Operation(summary = "部门分页查询")
     @GetMapping("/page")
     public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") Long currentPage,
             @RequestParam(name = "pageSize", defaultValue = "10") @Validated @Max(50) Long pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime
-    ) {
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime) {
+
+        QueryWrapper<Dept> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("updateTime");
+
         if (ObjUtil.isNotEmpty(startTime) && ObjUtil.isNotEmpty(endTime)) {
             wrapper.ge("updateTime", startTime);
             wrapper.le("updateTime", endTime);
         }
-
-        IPage<Role> page = roleService.page(new Page<>(currentPage, pageSize), wrapper);
-        if (ObjectUtil.isNotNull(page)) {
-            return Result.success(PageResult.getInstance(page));
-        }
-        return Result.error(null, ResultCode.QUERY_ERROR);
+        IPage<Dept> page = deptService.page(new Page<>(currentPage, pageSize), wrapper);
+        PageResult instance = PageResult.getInstance(page);
+        return Result.success(instance);
     }
 
-    @Operation(summary = "新增用户角色", description = "新增或者更新用户角色")
-    @PostMapping("/update")
-    public Result saveOrUpdate(@RequestBody Role role) {
-        boolean b = roleService.updateById(role);
-        if (b) {
-            return Result.ok();
-        }
-        return Result.error(null, ResultCode.UPDATE_ERROR);
-    }
-
-    @Operation(summary = "新增", description = "新增角色")
+    @Operation(summary = "新增部门", description = "新增部门")
     @PostMapping("/save")
-    public Result save(@RequestBody @Validated(AddGroup.class) Role role) {
-        boolean save = roleService.save(role);
+    public Result save(@RequestBody @Validated Dept dept) {
+        boolean save = deptService.save(dept);
         if (save) {
             return Result.ok();
         }
         return Result.error(null, ResultCode.INSERT_ERROR);
     }
 
-    @Operation(summary = "删除用户角色", description = "根据ID删除用户角色")
+    @Operation(summary = "更新部门", description = "更新部门")
+    @PostMapping("/update")
+    public Result update(@RequestBody @Validated(UpdateGroup.class) Dept dept) {
+        boolean update = deptService.updateById(dept);
+        if (update) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.UPDATE_ERROR);
+    }
+
+
+    @Operation(summary = "删除部门", description = "根据ID删除部门")
     @PostMapping("/delById")
-    public Result deleteById(@RequestBody @Validated Role role) {
-        boolean b = roleService.removeById(role);
+    public Result deleteById(@RequestBody @Validated DeptDto dept) {
+        boolean b = deptService.removeById(dept.getDeptId());
         if (b) {
             return Result.ok();
         }
         return Result.error(null, ResultCode.DELETE_ERROR);
     }
 
-    @Operation(summary = "查询用户角色", description = "根据ID查询用户角色")
+
+    @Operation(summary = "查询部门", description = "根据ID查询部门")
     @GetMapping("/getById")
-    public Result getById(Long id) {
-        Role byId = roleService.getById(id);
+    public Result getById(@RequestBody @Validated DeptDto dept) {
+        Dept byId = deptService.getById(dept.getDeptId());
+
         if (ObjectUtil.isNotNull(byId)) {
             return Result.success(byId);
         }
         return Result.error(null, ResultCode.QUERY_ERROR);
+
     }
 
-    @Operation(summary = "所有角色", description = "查询所有角色")
-    @GetMapping("/getRoleList")
-    public Result getRoleList() {
-        return Result.success(roleService.list());
+    @Operation(summary = "查询部门", description = "查询所有部门")
+    @GetMapping("/getDeptList")
+    public Result getDeptList() {
+        return Result.success(deptService.list());
     }
 
-    @Operation(summary = "查询role-菜单id", description = "根据菜单ID查询角色")
-    @GetMapping("/getSelectedRolesByMenuId")
-    public Result getSelectedRolesByMenuId(@Validated @NotNull Long menuId) {
-        return Result.ok(roleService.getSelectedRolesByMenuId(menuId));
-    }
 
-    @Operation(summary = "查询role-用户id", description = "根据用户ID查询角色")
-    @GetMapping("/getSelectedRolesByUserId")
-    public Result getSelectedRolesByUserId(@Validated @NotNull Long userId) {
-        return Result.ok(roleService.getSelectedRolesByUserId(userId));
-    }
-
-    @Operation(summary = "批量删除", description = "根据ID批量删除")
+    @Operation(summary = "批量删除", description = "根据ID批量删除部门")
     @PostMapping("/removeBatchByIds")
-    public Result removeBatchByIds(@RequestBody @NotEmpty List<Long> ids) {
-        return Result.success(roleService.removeBatchByIds(ids));
+    public Result removeBatchByIds(@RequestBody @Validated @NotEmpty List<Long> ids) {
+        return Result.success(deptService.removeBatchByIds(ids));
     }
 
 }

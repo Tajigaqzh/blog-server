@@ -1,23 +1,23 @@
 package com.hp.blogserver.controller.system;
 
-import ch.qos.logback.classic.spi.EventArgUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hp.blogserver.common.PageResult;
+import com.hp.blogserver.common.dto.AuthRolePermDto;
 import com.hp.blogserver.entity.Menu;
-import com.hp.blogserver.mapper.MenuMapper;
-import com.hp.blogserver.service.IMenuRoleService;
 import com.hp.blogserver.service.IMenuService;
 import com.hp.blogserver.utils.Result;
 import com.hp.blogserver.utils.ResultCode;
+import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * @Author 20126
@@ -42,25 +41,22 @@ public class MenuController {
     @Autowired
     IMenuService menuService;
 
-    @Autowired
-    IMenuRoleService menuRoleService;
-
 
     @Parameters({
             @Parameter(name = "currentPage", description = "页码", required = true, in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页条数", required = true, in = ParameterIn.QUERY),
             @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
             @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
-            @Parameter(name = "parendId", description = "父菜单", required = false, in = ParameterIn.QUERY),
+            @Parameter(name = "parentId", description = "父菜单", required = false, in = ParameterIn.QUERY),
     })
     @Operation(summary = "菜单分页查询")
     @GetMapping("/page")
     public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") Long currentPage,
-            @RequestParam(name = "pageSize", defaultValue = "10") Long pageSize,
+            @RequestParam(name = "pageSize", defaultValue = "10") @Validated @Max(50) Long pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime,
-            Long parendId) {
+            Long parentId) {
 
         QueryWrapper<Menu> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("m.updateTime");
@@ -70,8 +66,8 @@ public class MenuController {
             wrapper.le("m.updateTime", endTime);
         }
 
-        if (ObjUtil.isNotNull(parendId)) {
-            wrapper.eq("m.parent_id", parendId);
+        if (ObjUtil.isNotNull(parentId)) {
+            wrapper.eq("m.parent_id", parentId);
         }
         IPage<Menu> menuIPage = menuService.listPage(new Page<>(currentPage, pageSize), wrapper);
         PageResult instance = PageResult.getInstance(menuIPage);
@@ -92,6 +88,22 @@ public class MenuController {
     @PostMapping("/removeBatchByIds")
     public Result removeBatchByIds(@RequestBody List<Long> ids) {
         return Result.success(menuService.removeBatchByIds(ids));
+    }
+
+    @Operation(summary = "新增菜单", description = "新增或者更新菜单")
+    @PostMapping("/save")
+    public Result saveOrUpdate(@RequestBody @Validated Menu menu) {
+        return Result.success(menuService.saveOrUpdate(menu));
+    }
+
+    @Operation(summary = "新增菜单", description = "新增或者更新菜单")
+    @PostMapping("/update")
+    public Result update(@RequestBody @Validated(UpdateGroup.class) Menu menu) {
+        boolean b = menuService.updateById(menu);
+        if (b) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.UPDATE_ERROR);
     }
 
     @Operation(summary = "查询菜单", description = "根据ID查询菜单")
@@ -133,6 +145,16 @@ public class MenuController {
 
         list.add(0, menu);
         return Result.success(list);
+    }
+
+    @Operation(summary = "菜单授权", description = "菜单授权")
+    @PostMapping("/saveAuth")
+    public Result saveAuth(@RequestBody AuthRolePermDto menuRolePerm) {
+        if (ObjectUtil.isNotNull(menuRolePerm)) {
+            menuService.saveAuth(menuRolePerm);
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.UPDATE_ERROR);
     }
 
 }

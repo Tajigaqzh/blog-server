@@ -3,7 +3,11 @@ package com.hp.blogserver.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hp.blogserver.annotation.EnumValue;
+import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +36,7 @@ public class User implements Serializable, UserDetails {
     /**
      * 主键id
      */
+    @NotNull(groups = UpdateGroup.class)
     @Schema(description = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
@@ -40,7 +45,7 @@ public class User implements Serializable, UserDetails {
      * 删除状态：0、已删除 1、未删除
      **/
     @Schema(description = "删除状态：0、已删除 1、未删除")
-//    @EnumValue(intValues = {0, 1}, message = "状态只能是0或者1")
+    @EnumValue(intValues = {0, 1}, message = "状态只能是0或者1")
     @TableField(value = "deleteStatus")
     private int deleteStatus;
 
@@ -49,7 +54,7 @@ public class User implements Serializable, UserDetails {
      * 用户名
      */
     @Schema(description = "用户名", maxLength = 20, minLength = 3)
-//    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空")
     @TableField(value = "username")
     private String username;
 
@@ -57,7 +62,7 @@ public class User implements Serializable, UserDetails {
      * 昵称
      */
     @Schema(description = "用户昵称", maxLength = 20, minLength = 3)
-//    @NotBlank(message = "昵称不能为空")
+    @NotBlank(message = "昵称不能为空")
     @TableField(value = "nickname")
     private String nickname;
 
@@ -66,6 +71,7 @@ public class User implements Serializable, UserDetails {
      */
     @Schema(description = "密码", minLength = 10, maxLength = 100)
     @TableField(value = "password")
+    @Size(min = 10,max = 100)
     private String password;
 
 

@@ -76,8 +76,8 @@ public class UserController {
     @Operation(summary = "用户分页查询", description = "分页查询", method = "get")
     @GetMapping("/page")
     public Result page(
-            @RequestParam(name = "currentPage", defaultValue = "1") @NotNull Integer currentPage,
-            @RequestParam(name = "pageSize", defaultValue = "10") @NotNull @Max(value = 50, message = "pageSize最大不超过50") Integer pageSize,
+            @RequestParam(name = "currentPage", defaultValue = "1") Integer currentPage,
+            @RequestParam(name = "pageSize", defaultValue = "10") @Validated @Max(value = 50, message = "pageSize最大不超过50") Integer pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime,
             String username,

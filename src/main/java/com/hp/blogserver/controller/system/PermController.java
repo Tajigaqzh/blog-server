@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.activiti.engine.impl.util.CollectionUtil;
@@ -55,7 +56,7 @@ public class PermController {
     @GetMapping("/page")
     public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") Long currentPage,
-            @RequestParam(name = "pageSize", defaultValue = "10") Long pageSize,
+            @RequestParam(name = "pageSize", defaultValue = "10") @Validated @Max(50) Long pageSize,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime
     ) {

@@ -43,7 +43,6 @@ public class Menu {
      **/
     @EnumValue(intValues = {1, 0}, message = "状态只能为0,1")
     @Schema(description = "删除状态：0、已删除 1、未删除")
-//    @EnumValue(intValues = {1,0})
     @TableField(value = "deleteStatus")
     private int deleteStatus;
 

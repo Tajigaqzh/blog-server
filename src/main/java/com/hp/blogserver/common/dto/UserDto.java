@@ -8,6 +8,7 @@ import com.hp.blogserver.validate.UpdateGroup;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class UserDto extends User {
 
     @NotNull(groups = UpdateGroup.class, message = "id不能为空")

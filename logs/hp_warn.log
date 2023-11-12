@@ -1,0 +1,36 @@
+2023-11-12 20:08:08.919 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 20:08:08.919 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:08:08.939 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 20:08:08.940 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:08:09.011 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 20:08:09.011 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:13:18.323 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 20:13:18.323 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:13:18.347 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 20:13:18.347 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:13:18.426 [restartedMain] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 20:13:18.427 [restartedMain] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:15:07.083 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 20:15:07.083 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:15:07.116 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 20:15:07.116 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:15:07.337 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 20:15:07.337 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:16:28.144 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 20:16:28.144 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:16:28.174 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 20:16:28.174 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 20:16:28.384 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 20:16:28.384 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:07.808 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 21:19:07.809 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:07.841 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 21:19:07.842 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:08.061 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 21:19:08.061 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:49.895 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuPerm".
+2023-11-12 21:19:49.896 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuPerm ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:49.954 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.MenuRole".
+2023-11-12 21:19:49.955 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.MenuRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-11-12 21:19:50.227 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.hp.blogserver.entity.UserRole".
+2023-11-12 21:19:50.228 [main] WARN  c.b.mybatisplus.core.injector.DefaultSqlInjector - class com.hp.blogserver.entity.UserRole ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.

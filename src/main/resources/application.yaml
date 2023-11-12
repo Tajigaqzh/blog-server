@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
   jackson:
     default-property-inclusion: non_null
 
@@ -29,3 +29,11 @@ mybatis-plus:
       logic-not-delete-value: 1
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+
+logPath: logs
+logName: hp
+logBusinessLevel: debug
+logRootLevel: info
+logging:
+  config: classpath:logback-spring.xml
