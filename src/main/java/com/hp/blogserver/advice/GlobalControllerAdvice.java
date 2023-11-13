@@ -1,5 +1,6 @@
 package com.hp.blogserver.advice;
 
+import com.hp.blogserver.exception.UserHasExistException;
 import com.hp.blogserver.utils.Result;
 import com.hp.blogserver.utils.ResultCode;
 import jakarta.validation.ConstraintViolationException;
@@ -34,6 +35,7 @@ public class GlobalControllerAdvice {
     }
 
     //TODO resultCode待完善。可以把具体参数失败信息返回，记录日志
+
     /**
      * 构造参数校验错误
      *
@@ -65,5 +67,10 @@ public class GlobalControllerAdvice {
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public String HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
         return Result.errorJSON(ResultCode.UN_SUPPORT_METHOD);
+    }
+
+    @ExceptionHandler({UserHasExistException.class})
+    public String userHasExist() {
+        return Result.errorJSON(ResultCode.INSERT_ERROR);
     }
 }

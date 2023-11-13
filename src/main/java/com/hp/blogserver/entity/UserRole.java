@@ -3,6 +3,7 @@ package com.hp.blogserver.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -12,6 +13,7 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
+@Builder
 @TableName(value = "sys_user_role")
 @Schema(description = "用户-角色")
 public class UserRole {

@@ -20,4 +20,6 @@ public interface IUserService extends IService<User>, UserDetailsService {
     IPage<User> listPage(IPage<User> page, @Param(Constants.WRAPPER)Wrapper<User> userWrapper);
 
     int deleteBatchByIds(List<Long> ids);
+
+     boolean register(User user);
 }

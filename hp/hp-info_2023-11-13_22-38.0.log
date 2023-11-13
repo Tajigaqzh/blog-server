@@ -1,0 +1,26 @@
+2023-11-13 22:38:56.513 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2023-11-13 22:38:56.525 [Thread-52] INFO  org.apache.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2023-11-13 22:38:56.525 [Thread-52] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2023-11-13 22:38:56.525 [Thread-52] INFO  o.a.c.c.ContainerBase.[Tomcat-3].[localhost].[/] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-11-13 22:38:56.527 [Thread-52] INFO  org.apache.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2023-11-13 22:38:56.529 [Thread-52] INFO  org.apache.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+2023-11-13 22:38:56.603 [restartedMain] INFO  com.hp.blogserver.BlogServerApplication - Starting BlogServerApplication using Java 17.0.9 with PID 29660 (C:\Users\20126\Desktop\blog\blog-server\target\classes started by 20126 in C:\Users\20126\Desktop\blog\blog-server)
+2023-11-13 22:38:56.603 [restartedMain] INFO  com.hp.blogserver.BlogServerApplication - The following 1 profile is active: "dev"
+2023-11-13 22:38:56.908 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2023-11-13 22:38:56.908 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2023-11-13 22:38:56.908 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-11-13 22:38:56.908 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-11-13 22:38:56.930 [restartedMain] INFO  o.a.c.c.ContainerBase.[Tomcat-3].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-11-13 22:38:56.930 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 326 ms
+2023-11-13 22:38:57.139 [restartedMain] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2023-11-13 22:38:57.150 [restartedMain] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-11-13 22:38:58.646 [restartedMain] INFO  com.hp.blogserver.BlogServerApplication - Starting BlogServerApplication using Java 17.0.9 with PID 29660 (C:\Users\20126\Desktop\blog\blog-server\target\classes started by 20126 in C:\Users\20126\Desktop\blog\blog-server)
+2023-11-13 22:38:58.646 [restartedMain] INFO  com.hp.blogserver.BlogServerApplication - The following 1 profile is active: "dev"
+2023-11-13 22:38:59.040 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2023-11-13 22:38:59.040 [restartedMain] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2023-11-13 22:38:59.040 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-11-13 22:38:59.040 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-11-13 22:38:59.054 [restartedMain] INFO  o.a.c.c.ContainerBase.[Tomcat-4].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-11-13 22:38:59.055 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 407 ms

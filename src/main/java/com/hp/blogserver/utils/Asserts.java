@@ -3,6 +3,7 @@ package com.hp.blogserver.utils;
 import cn.hutool.core.collection.CollUtil;
 import com.hp.blogserver.entity.Menu;
 import com.hp.blogserver.entity.Role;
+import com.hp.blogserver.exception.UserHasExistException;
 import org.springframework.security.authorization.AuthorizationDecision;
 
 import java.util.List;
@@ -15,21 +16,27 @@ import java.util.List;
  */
 public class Asserts {
 
-    public static void isTrue(boolean b,String msg)  {
-        if(b){
+    public static void isTrue(boolean b, String msg) {
+        if (b) {
             throw new RuntimeException(msg);
         }
     }
 
-    public static void isNull(Object obj,String msg){
-        if(obj == null){
+    public static void isNull(Object obj, String msg) {
+        if (obj == null) {
             throw new RuntimeException(msg);
         }
     }
 
     public static void isNotNull(Object obj, String msg) {
-        if(obj != null){
+        if (obj != null) {
             throw new RuntimeException(msg);
+        }
+    }
+
+    public static void exist(Object obj) {
+        if (obj != null) {
+            throw new UserHasExistException();
         }
     }
 
@@ -38,12 +45,12 @@ public class Asserts {
     }
 
 
-    public boolean isGuest(List<Menu> menus){
+    public boolean isGuest(List<Menu> menus) {
 
         for (Menu menu : menus) {
-            if(CollUtil.isNotEmpty(menu.getRoles())){
+            if (CollUtil.isNotEmpty(menu.getRoles())) {
                 for (Role role : menu.getRoles()) {
-                    if(role.getTag().equalsIgnoreCase("GUEST")){
+                    if (role.getTag().equalsIgnoreCase("GUEST")) {
                         return true;
                     }
                 }

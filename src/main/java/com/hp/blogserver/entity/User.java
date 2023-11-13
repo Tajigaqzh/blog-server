@@ -3,12 +3,15 @@ package com.hp.blogserver.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hp.blogserver.annotation.EnumValue;
+import com.hp.blogserver.validate.AddGroup;
 import com.hp.blogserver.validate.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,6 +59,7 @@ public class User implements Serializable, UserDetails {
     @Schema(description = "用户名", maxLength = 20, minLength = 3)
     @NotBlank(message = "用户名不能为空")
     @TableField(value = "username")
+    @Size(max = 10, min = 3)
     private String username;
 
     /**
@@ -63,6 +67,7 @@ public class User implements Serializable, UserDetails {
      */
     @Schema(description = "用户昵称", maxLength = 20, minLength = 3)
     @NotBlank(message = "昵称不能为空")
+    @Length(min = 3, max = 10, message = "昵称格式不正确")
     @TableField(value = "nickname")
     private String nickname;
 
@@ -71,7 +76,8 @@ public class User implements Serializable, UserDetails {
      */
     @Schema(description = "密码", minLength = 10, maxLength = 100)
     @TableField(value = "password")
-    @Size(min = 10,max = 100)
+    @NotBlank(message = "密码不能为空")
+    @Length(max = 20, min = 6)
     private String password;
 
 
@@ -104,7 +110,10 @@ public class User implements Serializable, UserDetails {
      * 邮箱
      **/
     @Schema(description = "邮箱")
+    @Email(groups = {AddGroup.class}, regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     @TableField(value = "email")
+
+    @NotBlank(message = "email不能为空")
     private String email;
 
     /**
@@ -113,6 +122,7 @@ public class User implements Serializable, UserDetails {
 
     @Schema(description = "部门ID")
     @TableField(value = "dept_id")
+    @NotNull(message = "部门id不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private Long deptId;
 
     /**

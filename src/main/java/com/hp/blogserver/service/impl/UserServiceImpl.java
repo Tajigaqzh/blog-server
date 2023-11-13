@@ -6,10 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hp.blogserver.entity.Role;
-import com.hp.blogserver.entity.User;
+import com.hp.blogserver.entity.*;
 import com.hp.blogserver.mapper.UserMapper;
-import com.hp.blogserver.service.IUserService;
+import com.hp.blogserver.service.*;
 import com.hp.blogserver.utils.Asserts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -35,6 +35,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IRoleService roleService;
+
+    @Autowired
+    private IUserRoleService userRoleService;
+
+    @Autowired
+    private IUserPermService userPermService;
+
+    @Autowired
+    IPermService permService;
 
     /**
      * 登录
@@ -60,5 +72,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public int deleteBatchByIds(List<Long> ids) {
         return userMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    @Transactional
+    public boolean register(User user) {
+
+        int insert = userMapper.insert(user);
+
+        if (insert ==0) {
+            return false;
+        }
+
+        Role one = roleService.getOne(new QueryWrapper<Role>().eq("tag", "admin"));
+
+        UserRole userRole = UserRole.builder().userId(user.getId()).roleId(one.getId()).build();
+
+
+        userRoleService.save(userRole);
+
+
+        Permission perm = permService.getOne(new QueryWrapper<Permission>().eq("tag", "perm_all"));
+
+
+        UserPerm build = UserPerm.builder().userId(user.getId()).permId(perm.getId()).build();
+
+        userPermService.save(build);
+
+
+
+        return true;
     }
 }

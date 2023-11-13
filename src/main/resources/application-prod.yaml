@@ -9,4 +9,5 @@ spring:
     password: qwer123456
   devtools:
     restart:
-      enabled: true
+      enabled: false
+    add-properties: false

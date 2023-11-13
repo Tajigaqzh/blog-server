@@ -1,9 +1,17 @@
 package com.hp.blogserver.controller.system;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hp.blogserver.entity.User;
+import com.hp.blogserver.service.IUserRoleService;
+import com.hp.blogserver.service.IUserService;
+import com.hp.blogserver.utils.Asserts;
 import com.hp.blogserver.utils.Result;
+import com.hp.blogserver.validate.AddGroup;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +25,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegisterController {
 
-    public Result register(@RequestBody User user, HttpServletRequest request) {
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/register")
+    public Result register(@Validated(value = AddGroup.class) @RequestBody User user) {
+        User queryUser = userService.getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
+        Asserts.exist(queryUser);
+
+        String encode = passwordEncoder.encode(user.getPassword());
+        System.out.println(encode);
+
+        user.setPassword(encode);
+        user.setEnabled(true);
+
+
+
+
         return Result.ok();
     }
 

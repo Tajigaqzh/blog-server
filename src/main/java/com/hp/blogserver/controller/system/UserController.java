@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hp.blogserver.common.HpConstant;
 import com.hp.blogserver.common.PageResult;
-import com.hp.blogserver.common.dto.UserDto;
 import com.hp.blogserver.entity.User;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.JwtUtils;
@@ -153,7 +152,7 @@ public class UserController {
 
     @Operation(summary = "删除用户", description = "根据iD删除永华")
     @PostMapping("/delById")
-    public Result remove(@RequestBody User user) {
+    public Result remove(@RequestBody @Validated(value = UpdateGroup.class) User user) {
         boolean b = userService.removeById(user.getId());
         if (b) {
             return Result.ok();
@@ -164,7 +163,7 @@ public class UserController {
 
     @Operation(summary = "新增用户", description = "新增用户")
     @PostMapping("/save")
-    public Result save(@RequestBody @Validated(value = {AddGroup.class}) UserDto ua) {
+    public Result save(@RequestBody @Validated(value = {AddGroup.class}) User ua) {
         boolean save = userService.save(ua);
         if (save) {
             return Result.ok();
@@ -174,10 +173,10 @@ public class UserController {
 
     @Operation(summary = "更新用户", description = "更新用户")
     @PostMapping("/update")
-    public Result update(@RequestBody @Validated(value = {UpdateGroup.class}) UserDto ua) {
+    public Result update(@RequestBody @Validated(value = {UpdateGroup.class}) User user) {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("id", ua.getId());
-        boolean updateUser = userService.update(ua, updateWrapper);
+        updateWrapper.eq("id", user.getId());
+        boolean updateUser = userService.update(user,updateWrapper);
         if (updateUser) {
             return Result.ok();
         }
