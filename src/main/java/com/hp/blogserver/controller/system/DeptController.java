@@ -49,7 +49,7 @@ public class DeptController {
             @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
             @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
     })
-    @Operation(summary = "部门分页查询")
+    @Operation(summary = "部门分页查询",description = "分页查询")
     @GetMapping("/page")
     public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") Long currentPage,

@@ -115,7 +115,7 @@ public class UserController {
     }
 
     @Parameters({@Parameter(name = "id", required = true, example = "1", description = "userId")})
-    @Operation(summary = "查询用户")
+    @Operation(summary = "查询用户",description = "查询用户")
     @GetMapping("/getById")
     public Result getById(@NotNull(message = "id不能为空") Long id) {
         User user = userService.getById(id);

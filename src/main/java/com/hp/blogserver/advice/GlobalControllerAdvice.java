@@ -70,7 +70,7 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler({UserHasExistException.class})
-    public String userHasExist() {
-        return Result.errorJSON(ResultCode.INSERT_ERROR);
+    public String userHasExist(UserHasExistException exception) {
+        return Result.errorJSON(null,ResultCode.INSERT_ERROR,exception.getMessage());
     }
 }

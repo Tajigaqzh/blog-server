@@ -35,7 +35,7 @@
     <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--正在记录的日志文档的路径及文档名-->
 <!--        <file>${LOG_HOME}/app.log</file>-->
-        <file>${LOG_HOME}/${LOG_NAME}_debug_%d{yyyy-MM-dd}.log</file>
+        <file>${LOG_HOME}/${LOG_NAME}-debug-%d{yyyy-MM-dd}.log</file>
         <!--日志文档输出格式-->
         <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n：换行符-->
         <encoder>
@@ -46,8 +46,7 @@
         <!--日志记录器的滚动策略，按日期,按大小记录-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件路径：这里的%d{yyyy-MM-dd}表示按天分类日志-->
-<!--            <fileNamePattern>${LOG_NAME}/${LOG_NAME}-debug_%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
-            <fileNamePattern>${LOG_NAME}/${LOG_NAME}-debug_%d{yyyy-MM-dd_HH-mm}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/${LOG_NAME}-debug-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!--设置最大日志大小-->
                 <maxFileSize>100MB</maxFileSize>
@@ -66,7 +65,7 @@
     <!--level为 INFO 日志，时间滚动输出-->
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--正在记录的日志文档的路径及文档名-->
-        <file>${LOG_HOME}/${LOG_NAME}_info_%d{yyyy-MM-dd}.log</file>
+        <file>${LOG_HOME}/${LOG_NAME}-info-%d{yyyy-MM-dd}.log</file>
         <!--日志文档输出格式-->
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</Pattern>
@@ -77,7 +76,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--每天日志归档路径以及格式-->
             <!--日志文件路径：这里的%d{yyyy-MM-dd}表示按天分类日志-->
-            <fileNamePattern>${LOG_NAME}/${LOG_NAME}-info_%d{yyyy-MM-dd_HH-mm}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/${LOG_NAME}-info-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -124,7 +123,7 @@
     <!--level为 ERROR 日志，时间滚动输出-->
     <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--正在记录的日志文档的路径及文档名-->
-        <file>${LOG_HOME}/${LOG_NAME}_error_%d{yyyy-MM-dd}.log</file>
+        <file>${LOG_HOME}/${LOG_NAME}-error-%d{yyyy-MM-dd}.log</file>
         <!--日志文档输出格式-->
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</Pattern>
@@ -134,7 +133,7 @@
         <!--日志记录器的滚动策略，按日期,按大小记录-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--每天日志归档路径以及格式-->
-            <fileNamePattern>${LOG_NAME}/${LOG_NAME}-error_%d{yyyy-MM-dd_HH-mm}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/${LOG_NAME}-error-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

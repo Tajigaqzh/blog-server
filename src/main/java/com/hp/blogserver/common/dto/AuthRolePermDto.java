@@ -15,7 +15,9 @@ import java.util.List;
 public class AuthRolePermDto {
 
     private Long id;
+
     private List<Long> roles;
 
     private List<Long> perms;
+
 }

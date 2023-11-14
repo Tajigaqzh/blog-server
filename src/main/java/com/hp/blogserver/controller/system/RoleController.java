@@ -48,7 +48,7 @@ public class RoleController {
             @Parameter(name = "startTime", description = "开始时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
             @Parameter(name = "endTime", description = "结束时间：格式yyyy-mm-dd", required = false, in = ParameterIn.QUERY),
     })
-    @Operation(summary = "用户角色分页查询")
+    @Operation(summary = "用户角色分页查询",description = "分页查询")
     @GetMapping("/page")
     public Result page(
             @RequestParam(name = "currentPage", defaultValue = "1") Long currentPage,
@@ -70,9 +70,9 @@ public class RoleController {
         return Result.error(null, ResultCode.QUERY_ERROR);
     }
 
-    @Operation(summary = "新增用户角色", description = "新增或者更新用户角色")
+    @Operation(summary = "新增用户角色", description = "更新用户角色")
     @PostMapping("/update")
-    public Result saveOrUpdate(@RequestBody Role role) {
+    public Result update(@RequestBody Role role) {
         boolean b = roleService.updateById(role);
         if (b) {
             return Result.ok();

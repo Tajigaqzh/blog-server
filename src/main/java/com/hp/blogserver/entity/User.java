@@ -77,7 +77,7 @@ public class User implements Serializable, UserDetails {
     @Schema(description = "密码", minLength = 10, maxLength = 100)
     @TableField(value = "password")
     @NotBlank(message = "密码不能为空")
-    @Length(max = 20, min = 6)
+    @Length(max = 20, min = 6,message = "密码长度错误")
     private String password;
 
 

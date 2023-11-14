@@ -1,3 +1,0 @@
-2023-11-13 22:33:07.681 [http-nio-8080-exec-4] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
-2023-11-13 22:33:07.776 [http-nio-8080-exec-4] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@378d0191
-2023-11-13 22:33:07.776 [http-nio-8080-exec-4] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.

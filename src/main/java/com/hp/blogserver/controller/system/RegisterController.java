@@ -6,7 +6,9 @@ import com.hp.blogserver.service.IUserRoleService;
 import com.hp.blogserver.service.IUserService;
 import com.hp.blogserver.utils.Asserts;
 import com.hp.blogserver.utils.Result;
+import com.hp.blogserver.utils.ResultCode;
 import com.hp.blogserver.validate.AddGroup;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,20 +34,19 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
+    @Operation(summary = "分页查询",description = "分页查询")
     public Result register(@Validated(value = AddGroup.class) @RequestBody User user) {
-        User queryUser = userService.getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
-        Asserts.exist(queryUser);
 
         String encode = passwordEncoder.encode(user.getPassword());
-        System.out.println(encode);
-
         user.setPassword(encode);
         user.setEnabled(true);
+        user.setDeleteStatus(1);
 
-
-
-
-        return Result.ok();
+        boolean register = userService.register(user);
+        if (register) {
+            return Result.ok();
+        }
+        return Result.error(null, ResultCode.INSERT_ERROR);
     }
 
 }

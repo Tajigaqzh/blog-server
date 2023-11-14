@@ -92,7 +92,7 @@ public class MenuController {
 
     @Operation(summary = "新增菜单", description = "新增或者更新菜单")
     @PostMapping("/save")
-    public Result saveOrUpdate(@RequestBody @Validated Menu menu) {
+    public Result save(@RequestBody @Validated Menu menu) {
         return Result.success(menuService.saveOrUpdate(menu));
     }
 

@@ -77,30 +77,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     @Transactional
     public boolean register(User user) {
+        System.out.println(user);
+
+        System.out.println(user.getUsername());
+        User byUsername = userMapper.getByUsername(user.getUsername());
+
+
+        System.out.println("byName"+byUsername);
+        Asserts.exist(byUsername);
 
         int insert = userMapper.insert(user);
-
-        if (insert ==0) {
+        if (insert == 0) {
             return false;
         }
-
         Role one = roleService.getOne(new QueryWrapper<Role>().eq("tag", "admin"));
-
         UserRole userRole = UserRole.builder().userId(user.getId()).roleId(one.getId()).build();
-
-
         userRoleService.save(userRole);
+        Permission perm = permService.getOne(new QueryWrapper<Permission>().eq("tag", "permission_all"));
 
-
-        Permission perm = permService.getOne(new QueryWrapper<Permission>().eq("tag", "perm_all"));
-
-
+        System.out.println(perm);
         UserPerm build = UserPerm.builder().userId(user.getId()).permId(perm.getId()).build();
-
         userPermService.save(build);
-
-
-
         return true;
     }
 }
